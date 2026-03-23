@@ -69,7 +69,7 @@
 
 	let editingSubtaskId = $state<string | null>(null);
 	let editingSubtaskTitle = $state('');
-	
+
 	let draggedIndex = $state<number | null>(null);
 	let hoverIndex = $state<number | null>(null);
 	let subtaskEditInput = $state<HTMLInputElement | null>(null);
@@ -134,6 +134,7 @@
 						saveTaskChanges();
 					}
 					sessionStartTime = null;
+					new Audio('/sound/lesiakower-oversimplified-alarm-clock-113180.mp3').play().catch(e => console.error(e));
 					alert('Session Completed!');
 				}
 			}, 1000);
@@ -297,7 +298,6 @@
 <svelte:head>
 	<title>
 		{isTimerRunning ? `(${formatTime(timeLeft)}) ` : ''}
-		{task ? `${task.title} | Daily Tracking` : 'Daily Tracking'}
 	</title>
 </svelte:head>
 
@@ -449,7 +449,10 @@
 							<div
 								class="group flex cursor-pointer items-center gap-6 rounded-[2.5rem] border border-white/5 bg-[#121212]/50 p-6 transition-all hover:bg-white/[0.04] {subtask.is_completed
 									? 'opacity-40'
-									: ''} {draggedIndex === i ? 'opacity-20 border-[#AF4949]' : ''} {hoverIndex === i && draggedIndex !== i ? 'border-t-2 border-[#AF4949]/50' : ''}"
+									: ''} {draggedIndex === i ? 'border-[#AF4949] opacity-20' : ''} {hoverIndex ===
+									i && draggedIndex !== i
+									? 'border-t-2 border-[#AF4949]/50'
+									: ''}"
 								role="button"
 								tabindex="0"
 								draggable="true"
@@ -459,7 +462,9 @@
 								ondrop={(e) => handleDrop(e, i)}
 							>
 								<!-- Drag Handle -->
-								<div class="cursor-grab active:cursor-grabbing text-white/10 hover:text-white/40 transition-colors">
+								<div
+									class="cursor-grab text-white/10 transition-colors hover:text-white/40 active:cursor-grabbing"
+								>
 									<GripVertical class="h-5 w-5" />
 								</div>
 
@@ -501,7 +506,8 @@
 											? 'line-through'
 											: ''}"
 										onclick={() => startEditSubtask(subtask)}
-										onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && startEditSubtask(subtask)}
+										onkeydown={(e) =>
+											(e.key === 'Enter' || e.key === ' ') && startEditSubtask(subtask)}
 										role="button"
 										tabindex="0"
 									>
