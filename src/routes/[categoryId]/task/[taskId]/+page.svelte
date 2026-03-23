@@ -294,6 +294,13 @@
 	onDestroy(() => clearInterval(timerInterval));
 </script>
 
+<svelte:head>
+	<title>
+		{isTimerRunning ? `(${formatTime(timeLeft)}) ` : ''}
+		{task ? `${task.title} | Daily Tracking` : 'Daily Tracking'}
+	</title>
+</svelte:head>
+
 <div class="font-display min-h-screen overflow-x-hidden bg-[#080808] pb-20 text-white">
 	<!-- Header / Navigation -->
 	<div class="mx-auto mb-12 flex max-w-5xl items-center justify-between px-6 pt-10">
