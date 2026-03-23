@@ -1,4 +1,4 @@
-import { PUBLIC_API_URL } from '$env/static/public';
+import { env } from '$env/dynamic/public';
 import { browser } from '$app/environment';
 
 export interface User {
@@ -6,7 +6,7 @@ export interface User {
     username: string;
 }
 
-export const API_BASE = PUBLIC_API_URL || 'http://localhost:8080/api/v1';
+export const API_BASE = env.PUBLIC_API_URL || 'https://daily-tracking-api.onrender.com/api/v1';
 
 class AuthState {
     token = $state<string | null>(browser ? localStorage.getItem('dailytrack_token') : null);
